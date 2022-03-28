@@ -3,10 +3,12 @@ package com.cts.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "flights")
+@NamedNativeQuery(name ="flightToDest", query = "FROM Flight WHERE destiny=:dest")
 public class Flight {
 	@Id
 	private int code;
