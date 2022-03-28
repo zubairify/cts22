@@ -1,0 +1,138 @@
+Mongo DB
+
+Command to set path for Mongo
+>PATH=%PATH%;C:\ProgramFiles\MongoDB\server\5.0\bin
+* This is for temporary setting up path
+* It can be set inside Environment Variables for permanent path
+
+Command to start Mongo
+>mongo
+
+To show all databases
+>show dbs
+
+In relational databases mgmt system
+- We have tables and records/rows
+In NoSQL databases
+- We have collections
+	- Collections have documents
+	- Documents are represented as JSON
+
+Sample document of a person
+{
+	name:"Zubair",
+	age:41,
+	gender:"Male",
+	address:{
+		street:"Main Street",
+		city:"Thane",
+		zip:123412
+	},
+	hobbies:["Sleeping","Music","Cartoons"],
+	relations:[
+		{name:"Java", relation:"Brothers"},
+		{name:"MJ", relation:"Fan"}
+	]
+}
+
+NoSQL: Not Only SQL
+Within the same collection different documents may have different structure
+
+Creating and use database
+>use humans
+
+To check current database name
+>db
+
+To create a collection inside a database
+>db.createCollection('people')
+
+To show collections within current database
+>show collections
+
+To insert a document inside collection
+>db.people.insert({name:"Polo",age:21})
+
+To list all documents inside collection
+>db.people.find();
+
+To insert multiple records
+>db.people.insert([
+	{name:"Jack",age:23},
+	{name:"Mona",age:19,gender:"Female"}
+]);
+
+To see all documents in pretty format
+>db.people.find().pretty();
+
+To update a document in a collection
+>db.people.update({name:"Polo"},
+	{name:"Polo",age:21,gender:"Male"});
+
+To update only a field in document
+>db.people.update({name:"Jack"},{$set:{gender:"Male"}});
+
+To update a document, but if not found then insert
+>db.people.update({name:"Kim"},
+	{name:"Kim",age:20,gender:"Female",city:"Vienna"}, {upsert:true});
+
+To remove a specific field from document
+>db.people.update({name:"Kim"}, {$unset:{city:1}});
+
+To rename a field in a document
+>db.people.update({name:"Kim"},{$rename:{"gender":"sex"}});
+
+To remove a document from collection
+>db.people.remove({name:"Kim"});
+
+>db.createCollection("customers");
+> db.customers.insert([
+... {name:"Sam",
+... address:{street:"Old Street",city:"Thane"},
+... subscription:["Sub1","Sub2","Sub3"]
+... },
+... {name:"Brad",
+... address:{street:"Main Street",city:"Pune"},
+... subscription:["Sub1"]
+... },
+... {name:"Amy",
+... address:{street:"Cross Street",city:"Vashi"},
+... subscription:["Sub1","Sub2"]
+... }
+]);
+>db.customers.find().pretty();
+
+To find either or both documents
+> db.customers.find({$or:[{name:"Sam"},{name:"Amy"}]}).pretty();
+
+To count documents
+> db.customers.find().count();
+
+To sort result in ascending order of name
+> db.customers.find().sort({name:1});
+
+To sort result in descending order of name
+> db.customers.find().sort({name:-1});
+
+To limit results
+> db.customers.find().limit(2);
+
+To find based on condition of age greater than 20
+> db.prople.find({age:{$gt:20}});
+
+- Create a collection names employees
+- Add documents with following fields
+	- empno, ename, salary, skills["Java","DB","HTML"]
+- Try performing insert, update  and delete
+- Update job for employees like
+	- developer, tester, admin
+
+TO create a user in MongoDB
+>db.createUser({
+	user:"zubair",
+	pwd:"mongo",
+	roles:["readWrite","dbAdmin"]});
+
+Host string to connect mongo compass
+mongodb://zubair:mongo@127.0.0.1:27017/
+
