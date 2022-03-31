@@ -1,0 +1,86 @@
+MQ (Message Queue)
+
+Monolithic Application
+- All the layers are tightly coupled with each other
+	- Presentation Layer, BL (Business-Logic) Layer, Persistence Layer
+
+Queue tasks - 100 transfers
+- Triggered
+	- Time Schedule
+	- Manually triggered
+
+Transfer funds to Citi banks 100 accounts
+* Citi bank branches are still working
+	- Queues the transfer requests
+
+Queue
+- Point to Point communication
+- Asynchronous
+- Scheduled
+
+Topic
+- Publish - Subscribe communication
+- Asynchronous
+- Event driven
+
+Citi Bank ATM  
+		|
+	ATM Topic
+		- HSBC	--> HSBC BL
+		- BOA
+		- Citi	--> Citi BL
+
+- HSBC
+- BOA
+- CapitalOne
+- Citi
+
+Apache Kafka:
+- Distributed Event Streaming platform
+- It lets user read, write, store and process events (Records/Message).
+- These event are organised and stored in Topics.
+- A topic is similar to folders in a FS
+- Events are like files in the folder
+
+Server
+Broker
+Client
+Consumer
+Producer
+
+- Kafka client talks to Kafka Broker via Network (As everything is distributed)
+	- For writing or reading events / messages
+- The broker will store the events in a robust environment within distributed system
+	- Durable
+	- Fault Tolerant
+
+Zookeeper:
+- Its an environment designed by Apache
+- It acts as a centralised service and used to maintain naming and configuration data
+	- Of applications running inside it
+- Provides robust and flexible synchronisation within distributed system
+- All other apache services like Hadoop and Kafka uses Zookeeper for distributed systems
+
+# Starting Zookeeper
+$ bin/zookeeper-server-start.sh config/zookeepeproperties
+
+# Starting Kafka Server/Broker
+$ bin/kafka-server-start.sh config/server.properties
+
+# Checking list of topics
+$ bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+# Creating Topic
+$ bin/kafka-topics.sh --create --topic greetings --bootstrap-server localhost:9092
+
+#Describing a topic
+$ bin/kafka-topics.sh --describe --topic users --bootstrap-server localhost:9092
+
+#Running producer to publish messages on CLI
+$ bin/kafka-console-producer.sh --topic greetings --bootstrap-server localhost:9092
+
+#Running consumer to read all messages from a topic from beginning
+$ bin/kafka-console-consumer.sh --topic greetings --from-beginning --tstrap-server localhost:9092
+
+
+
